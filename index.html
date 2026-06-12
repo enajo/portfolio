@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ena John Egbe</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:   #FFFFFF;
+      --off:     #F4F6F9;
+      --light:   #E8ECF2;
+      --mid:     #A0ACBB;
+      --dark:    #4A5568;
+      --black:   #0A0F1A;
+      --blue:    #1A56DB;
+      --blue-lt: #EBF2FF;
+      --blue-dk: #0F3CAD;
+      --mono:    'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--mono);
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 56px; height: 60px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--light);
+    }
+    .nav-logo {
+      font-family: var(--mono); font-weight: 700; font-size: 15px;
+      color: var(--black); text-decoration: none; letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--blue); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--dark); text-decoration: none;
+      font-size: 13px; font-weight: 500; letter-spacing: 0.3px;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-cta {
+      background: var(--blue); color: var(--white);
+      padding: 7px 18px; border-radius: 4px;
+      font-family: var(--mono); font-size: 13px; font-weight: 600;
+      text-decoration: none; letter-spacing: 0.3px;
+      transition: background 0.15s;
+    }
+    .nav-cta:hover { background: var(--blue-dk); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 80px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 100px 56px 80px;
+    }
+    .hero-left {}
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--blue);
+      background: var(--blue-lt); padding: 5px 12px; border-radius: 3px;
+      margin-bottom: 28px;
+    }
+    .hero-tag::before { content: "//"; opacity: 0.5; }
+    .hero-name {
+      font-family: var(--mono); font-weight: 700;
+      font-size: clamp(38px, 5.5vw, 64px);
+      line-height: 1.05; letter-spacing: -2px;
+      color: var(--black); margin-bottom: 20px;
+    }
+    .hero-name .blue { color: var(--blue); }
+
+    .terminal-line {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--black);
+      border-radius: 6px;
+      padding: 12px 18px;
+      margin-bottom: 28px;
+      font-size: 14px;
+      max-width: 560px;
+    }
+    .t-prompt { color: var(--blue); font-weight: 600; }
+    .t-cmd { color: #7DD3FC; }
+    #typed { color: #86EFAC; }
+    .cursor {
+      display: inline-block; width: 9px; height: 16px;
+      background: #86EFAC;
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-desc {
+      font-size: 14px; color: var(--dark); line-height: 1.85;
+      max-width: 500px; margin-bottom: 36px;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-solid {
+      background: var(--blue); color: var(--white);
+      padding: 12px 24px; border-radius: 4px;
+      font-family: var(--mono); font-size: 13px; font-weight: 600;
+      text-decoration: none; transition: background 0.15s;
+    }
+    .btn-solid:hover { background: var(--blue-dk); }
+    .btn-outline {
+      border: 1.5px solid var(--light); color: var(--black);
+      padding: 12px 24px; border-radius: 4px;
+      font-family: var(--mono); font-size: 13px; font-weight: 500;
+      text-decoration: none; transition: border-color 0.15s;
+    }
+    .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* ── PHOTO CARD ── */
+    .hero-right { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .photo-frame {
+      width: 280px; height: 280px;
+      border-radius: 8px;
+      border: 2px solid var(--light);
+      overflow: hidden;
+      background: var(--off);
+      position: relative;
+    }
+    .photo-frame img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+    .photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px; color: var(--mid);
+    }
+    .photo-placeholder svg { opacity: 0.4; }
+    .photo-placeholder span { font-size: 12px; text-align: center; line-height: 1.5; }
+    .photo-meta {
+      width: 100%;
+      background: var(--off); border: 1px solid var(--light);
+      border-radius: 6px; padding: 14px 16px;
+      font-size: 12px;
+    }
+    .meta-row { display: flex; justify-content: space-between; padding: 4px 0; }
+    .meta-key { color: var(--mid); }
+    .meta-val { color: var(--black); font-weight: 500; }
+    .meta-val.blue { color: var(--blue); }
+
+    /* ── SECTIONS ── */
+    .section-wrap {
+      max-width: 1100px; margin: 0 auto; padding: 88px 56px;
+    }
+    .section-wrap.alt { background: var(--off); max-width: 100%; }
+    .section-wrap.alt .inner { max-width: 1100px; margin: 0 auto; padding: 88px 56px; }
+
+    .section-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .section-eyebrow::before { content: "// "; opacity: 0.5; }
+    .section-title {
+      font-family: var(--mono); font-weight: 700;
+      font-size: clamp(24px, 3.5vw, 36px);
+      letter-spacing: -1px; color: var(--black);
+      margin-bottom: 48px; line-height: 1.15;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .about-text p { font-size: 14px; color: var(--dark); margin-bottom: 14px; line-height: 1.85; }
+    .about-text p strong { color: var(--black); }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .stat {
+      border: 1.5px solid var(--light);
+      border-radius: 6px; padding: 20px;
+      background: var(--white);
+    }
+    .stat-num {
+      font-size: 32px; font-weight: 700;
+      color: var(--blue); line-height: 1; margin-bottom: 5px;
+    }
+    .stat-label { font-size: 12px; color: var(--dark); }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 16px; }
+    .exp-card {
+      border: 1.5px solid var(--light); border-radius: 6px;
+      padding: 28px 32px; background: var(--white);
+      transition: border-color 0.15s;
+    }
+    .exp-card:hover { border-color: var(--blue); }
+    .exp-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 4px; }
+    .exp-title { font-size: 16px; font-weight: 700; color: var(--black); }
+    .exp-period {
+      font-size: 11px; font-weight: 600;
+      color: var(--blue); background: var(--blue-lt);
+      padding: 3px 10px; border-radius: 3px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .exp-company { font-size: 13px; color: var(--mid); margin-bottom: 16px; font-style: italic; }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .exp-bullets li {
+      font-size: 13px; color: var(--dark);
+      padding-left: 20px; position: relative; line-height: 1.7;
+    }
+    .exp-bullets li::before {
+      content: ">_";
+      position: absolute; left: 0;
+      color: var(--blue); font-size: 11px; font-weight: 700;
+      top: 2px;
+    }
+
+    /* ── PROJECTS ── */
+    .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .proj-card {
+      border: 1.5px solid var(--light); border-radius: 6px;
+      padding: 28px; background: var(--white);
+      transition: border-color 0.15s, transform 0.15s;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column;
+    }
+    .proj-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+    .proj-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .proj-icon {
+      width: 36px; height: 36px; background: var(--blue-lt);
+      border-radius: 4px; display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .proj-gh-link {
+      font-size: 11px; color: var(--mid);
+      display: flex; align-items: center; gap: 4px;
+      text-decoration: none;
+    }
+    .proj-gh-link:hover { color: var(--blue); }
+    .proj-name { font-size: 16px; font-weight: 700; color: var(--black); margin-bottom: 8px; }
+    .proj-desc { font-size: 13px; color: var(--dark); line-height: 1.75; margin-bottom: 20px; flex: 1; }
+    .proj-stack { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; }
+    .chip {
+      font-size: 11px; font-weight: 500;
+      color: var(--dark); background: var(--off);
+      border: 1px solid var(--light);
+      padding: 3px 9px; border-radius: 3px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .skill-block {
+      border: 1.5px solid var(--light); border-radius: 6px;
+      padding: 20px 24px; background: var(--white);
+    }
+    .skill-heading {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 14px;
+    }
+    .skill-tags { display: flex; flex-direction: column; gap: 6px; }
+    .skill-tags span { font-size: 13px; color: var(--dark); }
+
+    /* ── CONTACT ── */
+    .contact-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+    }
+    .contact-left p { font-size: 14px; color: var(--dark); margin-bottom: 28px; line-height: 1.85; }
+    .contact-links { display: flex; flex-direction: column; gap: 10px; }
+    .contact-link {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 13px; color: var(--dark); text-decoration: none;
+      border: 1.5px solid var(--light); border-radius: 4px; padding: 12px 16px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .contact-link:hover { border-color: var(--blue); color: var(--blue); }
+    .contact-link svg { flex-shrink: 0; }
+    .contact-right {
+      background: var(--black); border-radius: 8px; padding: 28px;
+      font-size: 13px; line-height: 2;
+    }
+    .cr-line { display: flex; gap: 10px; }
+    .cr-ln { color: var(--mid); min-width: 20px; text-align: right; font-size: 11px; padding-top: 2px; }
+    .cr-k { color: #7DD3FC; }
+    .cr-s { color: #86EFAC; }
+    .cr-v { color: #FCA5A5; }
+    .cr-c { color: var(--mid); font-style: italic; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 28px 56px;
+      font-size: 12px; color: var(--mid);
+      border-top: 1px solid var(--light);
+    }
+    footer a { color: var(--blue); text-decoration: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; padding: 100px 24px 60px; }
+      .hero-right { display: none; }
+      .section-wrap, .section-wrap.alt .inner { padding: 64px 24px; }
+      .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .proj-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor { animation: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* fade-in on scroll */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">ena<span>.</span>egbe</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="EnaJohnEgbe_CV.docx" class="nav-cta" download>Download CV</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1 class="hero-name">Ena John<br/><span class="blue">Egbe.</span></h1>
+
+    <div class="terminal-line">
+      <span class="t-prompt">$</span>
+      <span class="t-cmd">whoami --role</span>
+      &nbsp;
+      <span id="typed"></span><span class="cursor"></span>
+    </div>
+
+    <p class="hero-desc">
+      I build products, lead teams, and automate the work nobody wants to do manually. Based in Bavaria, currently working at Hawk.ai and studying Health Informatics at DIT.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-solid">View projects</a>
+      <a href="#contact" class="btn-outline">Get in touch</a>
+    </div>
+  </div>
+
+  <!-- PHOTO -->
+  <div class="hero-right">
+    <div class="photo-frame">
+      <img src="pfi.png" alt="Profile Photo">
+      <div class="photo-placeholder" id="photo-placeholder">
+        <svg width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>Add your photo here<br/><code style="font-size:11px;opacity:0.6">replace with img tag</code></span>
+      </div>
+    </div>
+    <div class="photo-meta">
+      <div class="meta-row"><span class="meta-key">name</span><span class="meta-val">Ena John Egbe</span></div>
+      <div class="meta-row"><span class="meta-key">role</span><span class="meta-val blue">Product · Automation</span></div>
+      <div class="meta-row"><span class="meta-key">location</span><span class="meta-val">Bavaria, DE 🇩🇪</span></div>
+      <div class="meta-row"><span class="meta-key">status</span><span class="meta-val blue">Open to work ✓</span></div>
+      <div class="meta-row"><span class="meta-key">languages</span><span class="meta-val">EN · DE</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="section-wrap alt" id="about">
+  <div class="inner">
+    <p class="section-eyebrow">About me</p>
+    <h2 class="section-title">Engineer by instinct.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>Process Optimization Specialist at Hawk.ai</strong> in Munich, where I architect automation workflows, administer Jira at the system level, and build Power BI pipelines that replace hours of manual reporting.</p>
+        <p>Alongside that, I'm completing a <strong>B.Sc. in Health Informatics</strong> at Deggendorf Institute of Technology — connecting my IT background with the rapidly evolving world of digital health.</p>
+        <p>Before Germany, I spent over a year as an <strong>IT Officer at Guaranty Trust Bank in The Gambia</strong>, maintaining core banking systems, ATMs, and card services at scale.</p>
+        <p>I hold four Google professional certifications and I'm currently working towards the Google Cloud Professional Architect certification.</p>
+      </div>
+      <div class="stats-grid reveal">
+        <div class="stat"><div class="stat-num">4+</div><div class="stat-label">Years professional IT experience</div></div>
+        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Countries worked across</div></div>
+        <div class="stat"><div class="stat-num">200+</div><div class="stat-label">Students supported at DIT</div></div>
+        <div class="stat"><div class="stat-num">4</div><div class="stat-label">Google certifications earned</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div class="section-wrap" id="experience">
+  <p class="section-eyebrow">Work history</p>
+  <h2 class="section-title">Where I've worked.</h2>
+  <div class="exp-list">
+
+    <div class="exp-card reveal">
+      <div class="exp-top">
+        <div class="exp-title">Process Optimization Specialist</div>
+        <div class="exp-period">Aug 2023 – Present</div>
+      </div>
+      <div class="exp-company">Hawk.ai — Munich, Germany</div>
+      <ul class="exp-bullets">
+        <li>Architected end-to-end automation of business processes using Pipedream and Power Automate, eliminating repetitive manual tasks across operations.</li>
+        <li>Jira System Administrator: designed workflows, automation rules, permission schemes, and integrations with GitHub and HubSpot.</li>
+        <li>Co-administered Slack workspace: built bots, notification workflows, and system alert integrations improving team response times.</li>
+        <li>Built Power BI dashboards consolidating HubSpot, GitHub, Google Sheets, and Excel data — replacing manual weekly reporting.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-top">
+        <div class="exp-title">Student IT Support Technician</div>
+        <div class="exp-period">Oct 2023 – Present</div>
+      </div>
+      <div class="exp-company">Deggendorf Institute of Technology — Pfarrkirchen, Germany</div>
+      <ul class="exp-bullets">
+        <li>First-line IT support for 200+ students and staff across campus systems and devices.</li>
+        <li>Managed user onboarding, account provisioning, and device configuration for new semester intakes.</li>
+        <li>Reduced repeat support tickets by creating internal documentation and self-service guides.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-top">
+        <div class="exp-title">IT Officer</div>
+        <div class="exp-period">Feb 2022 – Mar 2023</div>
+      </div>
+      <div class="exp-company">Guaranty Trust Bank — The Gambia</div>
+      <ul class="exp-bullets">
+        <li>End-to-end support for the Core Banking System (CBS), ensuring uptime and reliability for daily operations.</li>
+        <li>Managed ATM networks, POS terminals, card services, and e-business platforms.</li>
+        <li>Coordinated with vendors and internal teams to resolve incidents and implement infrastructure updates.</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="section-wrap alt" id="projects">
+  <div class="inner">
+    <p class="section-eyebrow">Selected work</p>
+    <h2 class="section-title">Things I've built.</h2>
+    <div class="proj-grid">
+
+      <div class="proj-card reveal">
+        <div class="proj-header">
+          <div class="proj-icon">🔐</div>
+          <a href="https://github.com/enajo/Gate" target="_blank" class="proj-gh-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+        <div class="proj-name">Gate — Expert Booking Platform</div>
+        <p class="proj-desc">A Google-first gated booking platform for professionals. Lets experts create branded public pages, qualify leads before granting access, handle multi-calendar conflict checking, and confirm bookings via static access codes.</p>
+        <div class="proj-stack">
+          <span class="chip">Next.js</span>
+          <span class="chip">TypeScript</span>
+          <span class="chip">Prisma</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">Google Calendar API</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-header">
+          <div class="proj-icon">🏥</div>
+          <a href="https://github.com/enajo/silent-handover" target="_blank" class="proj-gh-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+        <div class="proj-name">Silent Handover — AI Clinical Triage</div>
+        <p class="proj-desc">AI-assisted multilingual triage handover system for high-acuity chest pain admissions. Captures patient speech in German, Turkish, and Arabic, generates SBAR clinical summaries via AI, and pushes them in real-time to doctor dashboards via WebSockets.</p>
+        <div class="proj-stack">
+          <span class="chip">React</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">Socket.IO</span>
+          <span class="chip">OpenAI API</span>
+          <span class="chip">SQLite</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-header">
+          <div class="proj-icon">📅</div>
+          <a href="https://github.com/enajo/Digital_Product" target="_blank" class="proj-gh-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+        <div class="proj-name">QuickDoc — Last-Minute Medical Appointments</div>
+        <p class="proj-desc">Health tech platform that connects patients with last-minute clinic slots released by cancellations. Filters by language, location, and specialty. Real-time notifications, standby queues, and role-based access for patients, clinics, and admins. Dockerized and production-ready.</p>
+        <div class="proj-stack">
+          <span class="chip">Python</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Docker</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip">Real-time notifications</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-header">
+          <div class="proj-icon">🗂️</div>
+          <a href="https://github.com/enajo/EHR_Project" target="_blank" class="proj-gh-link">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+        <div class="proj-name">EHR System — Electronic Health Records</div>
+        <p class="proj-desc">A Python/Flask-based Electronic Health Records system with a full database schema, templated frontend, and secure multi-role access. Built as a Health Informatics course project demonstrating clinical data management and secure patient record handling.</p>
+        <div class="proj-stack">
+          <span class="chip">Python</span>
+          <span class="chip">Flask</span>
+          <span class="chip">SQL</span>
+          <span class="chip">HTML/CSS</span>
+          <span class="chip">Role-based auth</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="section-wrap" id="skills">
+  <p class="section-eyebrow">Toolbox</p>
+  <h2 class="section-title">What I work with.</h2>
+  <div class="skills-grid">
+    <div class="skill-block reveal">
+      <div class="skill-heading">Automation</div>
+      <div class="skill-tags">
+        <span>Pipedream</span><span>Power Automate</span>
+        <span>API integrations</span><span>Webhook workflows</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-heading">Data &amp; BI</div>
+      <div class="skill-tags">
+        <span>Power BI</span><span>SQL</span>
+        <span>Google Sheets</span><span>Excel (advanced)</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-heading">Systems &amp; Ops</div>
+      <div class="skill-tags">
+        <span>Jira (System Admin)</span><span>Slack (Workspace Admin)</span>
+        <span>Zendesk</span><span>Incident.io</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-heading">Development</div>
+      <div class="skill-tags">
+        <span>Python</span><span>TypeScript / JavaScript</span>
+        <span>Java</span><span>C++</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-heading">Cloud &amp; CRM</div>
+      <div class="skill-tags">
+        <span>Google Cloud (GCP)</span><span>HubSpot CRM</span>
+        <span>Git / Linux / Bash</span><span>Docker</span>
+      </div>
+    </div>
+    <div class="skill-block reveal">
+      <div class="skill-heading">Design</div>
+      <div class="skill-tags">
+        <span>Figma</span><span>UX prototyping</span>
+        <span>Next.js / React</span><span>Tailwind CSS</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="section-wrap alt" id="contact">
+  <div class="inner">
+    <p class="section-eyebrow">Let's talk</p>
+    <h2 class="section-title">Open to opportunities.</h2>
+    <div class="contact-inner">
+      <div class="contact-left">
+        <p>Whether it's a full-time or part-time role, a health-tech project, or just a conversation, I'm always happy to connect.</p>
+        <div class="contact-links">
+          <a href="mailto:enajohnegbe@gmail.com" class="contact-link">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            enajohnegbe@gmail.com
+          </a>
+          <a href="tel:+4915215899157" class="contact-link">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.91 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.81 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +49 152 158 99157
+          </a>
+          <a href="https://github.com/enajo" target="_blank" class="contact-link">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            github.com/enajo
+          </a>
+          <a href="https://linkedin.com/in/enajohnegbe" target="_blank" class="contact-link">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn profile
+          </a>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="cr-line"><span class="cr-ln">1</span><span class="cr-c">// ena.contact.json</span></div>
+        <div class="cr-line"><span class="cr-ln">2</span><span style="color:#F4F4F4">{</span></div>
+        <div class="cr-line"><span class="cr-ln">3</span>&nbsp;&nbsp;<span class="cr-k">"name"</span><span style="color:#F4F4F4">: </span><span class="cr-s">"Ena John Egbe"</span><span style="color:#F4F4F4">,</span></div>
+        <div class="cr-line"><span class="cr-ln">4</span>&nbsp;&nbsp;<span class="cr-k">"role"</span><span style="color:#F4F4F4">: </span><span class="cr-s">"Product . Automation"</span><span style="color:#F4F4F4">,</span></div>
+        <div class="cr-line"><span class="cr-ln">5</span>&nbsp;&nbsp;<span class="cr-k">"location"</span><span style="color:#F4F4F4">: </span><span class="cr-s">"Bavaria, Germany"</span><span style="color:#F4F4F4">,</span></div>
+        <div class="cr-line"><span class="cr-ln">6</span>&nbsp;&nbsp;<span class="cr-k">"openToWork"</span><span style="color:#F4F4F4">: </span><span class="cr-v">true</span><span style="color:#F4F4F4">,</span></div>
+        <div class="cr-line"><span class="cr-ln">7</span>&nbsp;&nbsp;<span class="cr-k">"languages"</span><span style="color:#F4F4F4">: [</span><span class="cr-s">"EN"</span><span style="color:#F4F4F4">, </span><span class="cr-s">"DE"</span><span style="color:#F4F4F4">],</span></div>
+        <div class="cr-line"><span class="cr-ln">8</span>&nbsp;&nbsp;<span class="cr-k">"interests"</span><span style="color:#F4F4F4">: [</span></div>
+        <div class="cr-line"><span class="cr-ln">9</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cr-s">"Health Tech"</span><span style="color:#F4F4F4">,</span></div>
+        <div class="cr-line"><span class="cr-ln">10</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cr-s">"Process Automation"</span><span style="color:#F4F4F4">,</span></div>
+        <div class="cr-line"><span class="cr-ln">11</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="cr-s">"Data Engineering"</span></div>
+        <div class="cr-line"><span class="cr-ln">12</span>&nbsp;&nbsp;<span style="color:#F4F4F4">]</span></div>
+        <div class="cr-line"><span class="cr-ln">13</span><span style="color:#F4F4F4">}</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Built by Ena John Egbe · <a href="https://github.com/enajo" target="_blank">github.com/enajo</a> · Bavaria</p>
+</footer>
+
+<script>
+  // Typewriter
+  const roles = ["Process Automation Specialist","Product Manager", "Jira System Administrator","Health Informatics Student","Full-Stack Developer","IT Systems Engineer"];
+  let ri = 0, ci = 0, del = false;
+  const el = document.getElementById('typed');
+  function type() {
+    const cur = roles[ri];
+    el.textContent = del ? cur.slice(0, --ci) : cur.slice(0, ++ci);
+    if (!del && ci === cur.length) { del = true; setTimeout(type, 1800); return; }
+    if (del && ci === 0) { del = false; ri = (ri + 1) % roles.length; }
+    setTimeout(type, del ? 38 : 65);
+  }
+  type();
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
